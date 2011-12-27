@@ -92,7 +92,7 @@ then
 fi
 
 NGD_PRIME=$NGD_PRIME_ROOT'/'$NAME'/'
-NGD_HUB=$NGD_HUB_ROOT'/'$NAME'/'
+NGD_HUB=$NGD_HUB_ROOT'/'$NAME'.git/'
 
 if cd "$NGD_HUB" 2>/dev/null; then
 	echo -e "Directory $NGD_HUB already exists."
