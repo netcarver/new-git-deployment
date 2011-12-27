@@ -30,10 +30,7 @@ init_prime()
 	git init;
 	git remote add  hub $1
 	git remote show hub
-	#touch README;
-	#git add README;
-	#git commit -m "Initial Commit" --author="New Git Deploy Script <noreply@mailinator.com>"
-	#git push hub master		# Brings the hub into sync with our initial state.
+	git config remote.hub.push HEAD	# Needed by Prime's post-commit hook to push the current branch
 }
 
 
