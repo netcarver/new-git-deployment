@@ -13,7 +13,7 @@ title()
 
 init_hub()
 {
-	title 'Creating HUB repository';
+	title "Creating HUB repository [$1]";
 	mkdir -pv $1
 	cd $1
 	git --bare init
@@ -24,7 +24,7 @@ init_prime()
 	#	Creates a new deployment PRIME repository.
 	#	Call this after the deploy HUB has been initialised please.
 
-	title 'Creating PRIME repository'
+	title "Creating PRIME repository [$2]"
 	mkdir -pv $2
 	cd $2
 	git init;
