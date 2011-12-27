@@ -113,11 +113,9 @@ prime_hook $NGD_HUB $NGD_PRIME
 #	Just arrange for the HUBs to live on a secure remote share and you have some protection against
 # failure of your local drive and loss of the work on PRIME.
 #
-if [[ "--one-way" == "$2" ]]
+if [[ "--one-way" == "$2" || "--one-way" == "$NGD_OPTION" ]]
 then
-	echo 
 	echo "Option: One-way -- not installing hub post-update hook."
-	echo
 else
 	hub_hook   $NGD_HUB $NGD_PRIME
 fi
