@@ -16,7 +16,7 @@ init_hub()
 	title "Creating HUB repository [$1]";
 	mkdir -p $1
 	cd $1
-	git --bare init
+	git --bare init -q
 }
 
 init_prime()
@@ -27,16 +27,16 @@ init_prime()
 	title "Creating PRIME repository [$2]"
 	mkdir -p $2
 	cd $2
-	git init;
+	git init -q;
 	git remote add  hub $1
-	git remote show hub
+	#git remote show hub
 	git config remote.hub.push HEAD	# Needed by Prime's post-commit hook to push the current branch
 }
 
 
 hub_hook()
 {
-	# Adds the post-* hooks to HUB and PRIME to keep them in sync.
+	title "Installing HUB post-update hook."
 
 	HUB_HOOK=$1'/hooks/post-update'
 	cat > $HUB_HOOK <<EndOfHubHook
@@ -57,6 +57,8 @@ EndOfHubHook
 
 prime_hook() 
 {
+	title "Installing PRIME post-commit hook."
+
 	PRIME_HOOK=$2'/.git/hooks/post-commit'
 	cat > $PRIME_HOOK <<EndOfPrimeHook
 #!/bin/sh
@@ -114,10 +116,9 @@ prime_hook $NGD_HUB $NGD_PRIME
 if [[ "--one-way" == "$2" ]]
 then
 	echo 
-	echo "One-way updates requested -- not installing hub post-update hook."
+	echo "Option: One-way -- not installing hub post-update hook."
 	echo
 else
 	hub_hook   $NGD_HUB $NGD_PRIME
 fi
 
-echo "Done."
