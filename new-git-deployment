@@ -122,3 +122,4 @@ else
 	hub_hook   $NGD_HUB $NGD_PRIME
 fi
 
+exit $SUCCESS
