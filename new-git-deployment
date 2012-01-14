@@ -4,8 +4,6 @@ SUCCESS=0
 E_DEPLOY_EXISTS=1
 E_WRONGPARAMS=2
 
-VESION='v0.5 EXTERNAL'
-
 init_hub()
 {
 	mkdir -p $1
