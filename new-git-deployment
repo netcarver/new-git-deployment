@@ -4,7 +4,6 @@ SUCCESS=0
 E_DEPLOY_EXISTS=1
 E_WRONGPARAMS=2
 
-
 init_hub()
 {
 	mkdir -p $1
@@ -18,11 +17,17 @@ init_prime()
 	#	Call this after the deploy HUB has been initialised please.
 	mkdir -p $2
 	cd $2
-	git init -q;
-	git remote add  hub $1
+	if [[ "" == "$3" ]]
+	then
+		git init -q
+	else
+		cd ..
+		git clone $3 $2
+		cd $2
+	fi
+	git remote add hub $1
 	git config remote.hub.push HEAD	# Needed by Prime's post-commit hook to push the current branch
 }
-
 
 hub_hook()
 {
@@ -66,6 +71,8 @@ else
    NAME=$1
 fi
 
+EXTERNAL=$2
+
 # Assign default values to ROOTS if needed...
 if [[ "" == "$NGD_HUB_ROOT" ]]
 then
@@ -90,7 +97,7 @@ if cd "$NGD_PRIME" 2>/dev/null; then
 fi
 
 init_hub   $NGD_HUB
-init_prime $NGD_HUB $NGD_PRIME
+init_prime $NGD_HUB $NGD_PRIME $EXTERNAL
 prime_hook $NGD_HUB $NGD_PRIME
 
 #
@@ -105,6 +112,16 @@ then
 else
 	hub_hook   $NGD_HUB $NGD_PRIME
 fi
+
+#
+#	If we created this by cloning an external, then push to the hub as the project will probably not be
+# empty.
+#
+if [[ "" != "$EXTERNAL" ]]
+then
+	git push -q hub master
+fi
+
 
 echo "Success -- cd $NGD_PRIME to start working."
 
