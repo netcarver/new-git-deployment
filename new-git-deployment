@@ -106,7 +106,7 @@ prime_hook $NGD_HUB $NGD_PRIME
 #	Just arrange for the HUBs to live on a secure remote share and you have some protection against
 # failure of your local drive and loss of the work on PRIME.
 #
-if [[ "--one-way" == "$2" || "--one-way" == "$NGD_OPTION" ]]
+if [[ "--one-way" == "$2" || "--one-way" == "$3" || "--one-way" == "$NGD_OPTION" ]]
 then
 	echo "Warning: PRIME => HUB synchronisation only."
 else
